@@ -1,17 +1,22 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
 import { AppService } from './app.service';
 
-@Controller()
+@Controller('users')
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @Post('transfer')
-  transfer(@Body() body: Transfer): string {
-    return this.appService.transfer(body);
+  @Post('')
+  async createUser(@Body() body: UserDTO): Promise<string> {
+    return await this.appService.createUser(body);
+  }
+
+  @Patch('transfer')
+  async transfer(@Body() body: Transfer): Promise<string> {
+    return await this.appService.transfer(body);
   }
 
   @Get('balance/:id')
-  balance(@Param() params: { id: number }): string {
-    return this.appService.getBalance(params.id);
+  async getBalance(@Param() params: { id: number }): Promise<string> {
+    return await this.appService.getBalance(params.id);
   }
 }

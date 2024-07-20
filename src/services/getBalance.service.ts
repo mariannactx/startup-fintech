@@ -1,5 +1,6 @@
 export class GetBalanceService {
-  execute(id: number, database: Database): string {
-    return `${database.findById(id).balance}`;
+  async execute(id: number, repository: BaseRepository): Promise<string> {
+    const user = await repository.findUserById(id);
+    return `${user.balance}`;
   }
 }
