@@ -1,6 +1,6 @@
 const users: User[] = [
   {
-    id: 1,
+    _id: 1,
     type: 'common',
     balance: 4000,
     fullName: 'Maria Silva',
@@ -9,7 +9,7 @@ const users: User[] = [
     password: '123456',
   },
   {
-    id: 2,
+    _id: 2,
     type: 'common',
     balance: 14000,
     fullName: 'João Silva',
@@ -18,7 +18,7 @@ const users: User[] = [
     password: '123456',
   },
   {
-    id: 3,
+    _id: 3,
     type: 'store',
     balance: 100,
     fullName: 'Ana Silva',
@@ -38,13 +38,13 @@ export class MockRepository implements BaseRepository {
   }
 
   async createUser(data: UserDTO) {
-    const user = { id: users.length + 1, ...data };
+    const user = { _id: users.length + 1, ...data };
     users.push(user);
     return user;
   }
 
-  async saveUserBalance(id: number, balance: number) {
-    users[id - 1].balance = balance;
+  async saveUserBalance(user: User, balance: number) {
+    users[user._id - 1].balance = balance;
     return true;
   }
 }

@@ -42,7 +42,7 @@ describe('AppController', () => {
 
       expect(await appController.createUser(data)).toBe(
         JSON.stringify({
-          id: 4,
+          _id: 4,
           ...data,
         }),
       );

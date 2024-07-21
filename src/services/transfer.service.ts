@@ -22,8 +22,8 @@ export class TransferService {
     const payee = await repository.findUserById(data.payee);
     const payeeBalanceAfterTransfer = payee.balance + data.value;
 
-    await repository.saveUserBalance(data.payer, payerBalanceAfterTransfer);
-    await repository.saveUserBalance(data.payee, payeeBalanceAfterTransfer);
+    await repository.saveUserBalance(payer, payerBalanceAfterTransfer);
+    await repository.saveUserBalance(payee, payeeBalanceAfterTransfer);
 
     return '';
   }

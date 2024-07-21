@@ -1,5 +1,5 @@
 interface User {
-  id: number;
+  _id: ObjectId;
   type: UserTypes;
   balance: number;
   fullName: string;

@@ -1,17 +1,14 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, ObjectIdColumn, ObjectId } from 'typeorm';
 
 @Entity('users')
 export class UserEntity implements User {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @ObjectIdColumn()
+  _id: ObjectId;
 
   @Column({ default: 'common' })
   type: UserTypes;
 
   @Column('decimal', {
-    precision: 8,
-    scale: 2,
-    default: 0,
     transformer: {
       to: (value: number) => value,
       from: (value: string) => parseFloat(value),
@@ -19,7 +16,7 @@ export class UserEntity implements User {
   })
   balance: number;
 
-  @Column()
+  @Column({ name: 'full_name' })
   fullName: string;
 
   @Column()

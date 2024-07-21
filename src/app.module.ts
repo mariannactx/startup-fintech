@@ -9,13 +9,13 @@ import { UserEntity } from './entities/user.entity';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
-      type: 'postgres',
-      port: 5436,
-      username: 'postgres',
-      password: 'docker',
-      database: 'postgres',
-      synchronize: false,
+      type: 'mongodb',
       host: 'localhost',
+      port: 27017,
+      username: 'fintech_user',
+      password: 'fintech',
+      database: 'fintech',
+      synchronize: false,
       entities: [UserEntity],
       namingStrategy: new SnakeNamingStrategy(),
     }),

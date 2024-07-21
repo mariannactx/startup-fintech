@@ -1,5 +1,6 @@
 import { UserEntity } from './entities/user.entity';
 import { Repository } from 'typeorm';
+import { ObjectId } from 'mongodb';
 
 export class AppRepository implements BaseRepository {
   constructor(private usersRepository: Repository<UserEntity>) {}
@@ -8,23 +9,17 @@ export class AppRepository implements BaseRepository {
     return this.usersRepository.find();
   }
 
-  findUserById(id: number): Promise<UserEntity | null> {
-    return this.usersRepository.findOneBy({ id });
+  async findUserById(id: ObjectId): Promise<UserEntity | null> {
+    return this.usersRepository.findOneBy({ _id: new ObjectId(id) });
   }
 
   createUser(data: UserDTO) {
-    const user: User = {
-      id: 0,
-      ...data,
-    };
-    return this.usersRepository.save(user);
+    return this.usersRepository.save(data);
   }
 
-  async saveUserBalance(id: number, balance: number) {
-    const user = await this.usersRepository.findOneBy({ id });
-
+  async saveUserBalance(user: User, balance: number) {
     user.balance = balance;
-    await this.usersRepository.save(user);
+    await this.usersRepository.update({ _id: user._id }, user);
 
     return true;
   }

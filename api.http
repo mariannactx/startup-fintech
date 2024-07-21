@@ -37,7 +37,7 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:3000/users/balance/1
+GET http://localhost:3000/users/balance/<userId>
 
 ###
 PATCH http://localhost:3000/users/transfer
@@ -45,8 +45,8 @@ Content-Type: application/json
 
 {
   "value": 50.5,
-  "payer": 2,
-  "payee": 1
+  "payer": "payer",
+  "payee": "payee"
 }
 
 ###
@@ -55,8 +55,8 @@ Content-Type: application/json
 
 {
   "value": 100.5,
-  "payer": 3,
-  "payee": 1
+  "payer": "payer",
+  "payee": "payee"
 }
 
 ###
@@ -65,12 +65,12 @@ Content-Type: application/json
 
 {
   "value": 4050.6,
-  "payer": 1,
-  "payee": 3
+  "payer": "payer",
+  "payee": "payee"
 }
 
 ###
-GET http://localhost:3000/users/balance/1
+GET http://localhost:3000/users/balance/<userId>
 
 ###
-GET http://localhost:3000/users/balance/2
+GET http://localhost:3000/users/balance/<userId>
