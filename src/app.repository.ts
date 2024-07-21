@@ -1,34 +1,31 @@
+import { UserEntity } from './entities/user.entity';
+import { Repository } from 'typeorm';
+
 export class AppRepository implements BaseRepository {
-  async findAllUsers() {
-    return [];
+  constructor(private usersRepository: Repository<UserEntity>) {}
+
+  findAllUsers(): Promise<UserEntity[]> {
+    return this.usersRepository.find();
   }
 
-  async findUserById(id: number) {
-    const user: User = {
-      id: id,
-      type: 'common',
-      balance: 0,
-      fullName: 'Maria Silva',
-      cpf: '1234567890',
-      email: 'maria@silva.com',
-      password: '12345',
-    };
-
-    return user;
+  findUserById(id: number): Promise<UserEntity | null> {
+    return this.usersRepository.findOneBy({ id });
   }
 
-  async createUser(data: UserDTO) {
-    console.log(data);
+  createUser(data: UserDTO) {
     const user: User = {
       id: 0,
       ...data,
     };
-
-    return user;
+    return this.usersRepository.save(user);
   }
 
   async saveUserBalance(id: number, balance: number) {
-    console.log(id, balance);
+    const user = await this.usersRepository.findOneBy({ id });
+
+    user.balance = balance;
+    await this.usersRepository.save(user);
+
     return true;
   }
 }
