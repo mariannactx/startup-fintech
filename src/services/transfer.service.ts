@@ -4,6 +4,10 @@ export class TransferService {
   async execute(data: Transfer, repository: BaseRepository): Promise<string> {
     const payer = await repository.findUserById(data.payer);
 
+    if (!payer) {
+      throw new HttpException('Payer not found', HttpStatus.NOT_FOUND);
+    }
+
     if (payer.type == 'store') {
       throw new HttpException(
         'User cannot transfer.',
@@ -20,6 +24,11 @@ export class TransferService {
     }
 
     const payee = await repository.findUserById(data.payee);
+
+    if (!payee) {
+      throw new HttpException('Payee not found', HttpStatus.NOT_FOUND);
+    }
+
     const payeeBalanceAfterTransfer = payee.balance + data.value;
 
     await repository.saveUserBalance(payer, payerBalanceAfterTransfer);

@@ -60,7 +60,7 @@ describe('AppController', () => {
       ).toBe('');
     });
 
-    it('should throw an error when user type is "store"', () => {
+    it('should throw an error when payer type is "store"', () => {
       expect(async () => {
         await appController.transfer({
           value: 100.5,
@@ -70,7 +70,7 @@ describe('AppController', () => {
       }).rejects.toEqual(new Error('User cannot transfer.'));
     });
 
-    it('should throw an error when user does not have enough balance to transfer', () => {
+    it('should throw an error when payer does not have enough balance to transfer', () => {
       expect(async () => {
         await appController.transfer({
           value: 4050.6,
@@ -80,6 +80,26 @@ describe('AppController', () => {
       }).rejects.toEqual(
         new Error('Not enough balance to tranfer this value.'),
       );
+    });
+
+    it('should throw an error when payer does not exist', () => {
+      expect(async () => {
+        await appController.transfer({
+          value: 10,
+          payer: 5,
+          payee: 3,
+        });
+      }).rejects.toEqual(new Error('Payer not found'));
+    });
+
+    it('should throw an error when payee does not exist', () => {
+      expect(async () => {
+        await appController.transfer({
+          value: 10,
+          payer: 1,
+          payee: 5,
+        });
+      }).rejects.toEqual(new Error('Payee not found'));
     });
   });
 
