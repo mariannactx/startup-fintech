@@ -10,6 +10,11 @@ export class AppController {
     return await this.appService.createUser(body);
   }
 
+  @Get('')
+  async getAllUsers(): Promise<string> {
+    return await this.appService.getAllUsers();
+  }
+
   @Patch('transfer')
   async transfer(@Body() body: Transfer): Promise<string> {
     return await this.appService.transfer(body);

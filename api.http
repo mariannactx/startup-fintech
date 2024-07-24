@@ -1,3 +1,4 @@
+### Create user 1
 POST http://localhost:3000/users
 Content-Type: application/json
 
@@ -9,8 +10,9 @@ Content-Type: application/json
     "email": "maria@silva.com",
     "password": "123456"
 }
-
 ###
+
+### Create user 2
 POST http://localhost:3000/users
 Content-Type: application/json
 
@@ -22,8 +24,9 @@ Content-Type: application/json
   "email": "joao@silva.com",
   "password": "123456"
 }
-
 ###
+
+### Create user 3
 POST http://localhost:3000/users
 Content-Type: application/json
 
@@ -35,42 +38,47 @@ Content-Type: application/json
   "email": "ana@silva.com",
   "password": "123456"
 }
-
 ###
-GET http://localhost:3000/users/balance/<userId>
 
+### List all users
+GET http://localhost:3000/users
 ###
+
+### Get user 1 balance
+GET http://localhost:3000/users/balance/<user1>
+###
+
+### Transfer from user 1 to user 2 (success)
 PATCH http://localhost:3000/users/transfer
 Content-Type: application/json
 
 {
   "value": 50.5,
-  "payer": "payer",
-  "payee": "payee"
+  "payer": "<user1>",
+  "payee": "<user2>"
 }
-
 ###
+
+### Transfer from user 3 to user 1 (fail)
 PATCH http://localhost:3000/users/transfer
 Content-Type: application/json
 
 {
   "value": 100.5,
-  "payer": "payer",
-  "payee": "payee"
+  "payer": "<user3>",
+  "payee": "<user1>"
 }
-
 ###
+
+### Transfer from user 1 to user 3 (fail)
 PATCH http://localhost:3000/users/transfer
 Content-Type: application/json
 
 {
   "value": 4050.6,
-  "payer": "payer",
-  "payee": "payee"
+  "payer": "<user1>",
+  "payee": "<user3>"
 }
 
-###
-GET http://localhost:3000/users/balance/<userId>
-
-###
-GET http://localhost:3000/users/balance/<userId>
+### Get all users
+GET http://localhost:3000/users

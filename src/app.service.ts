@@ -3,6 +3,7 @@ import { AppRepository } from './app.repository';
 import { InjectEntityManager, InjectRepository } from '@nestjs/typeorm';
 import { MongoEntityManager, Repository } from 'typeorm';
 import { UserEntity } from './entities/user.entity';
+import { GetAllUsersService } from './services/getAllUsers';
 import { CreateUserService } from './services/createUser.service';
 import { TransferService } from './services/transfer.service';
 import { GetBalanceService } from './services/getBalance.service';
@@ -22,6 +23,9 @@ export class AppService {
       this.entityManager,
     );
   }
+
+  async getAllUsers(): Promise<string> {
+    return await new GetAllUsersService().execute(this.repository);
   }
 
   async createUser(data: UserDTO): Promise<string> {
