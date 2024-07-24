@@ -43,8 +43,19 @@ export class MockRepository implements BaseRepository {
     return user;
   }
 
-  async saveUserBalance(user: User, balance: number) {
-    users[user._id - 1].balance = balance;
-    return true;
+  async saveUserBalance(session: any, user: User, balance: number) {
+    const id = user._id - 1;
+    users[id].balance = balance;
+    return users[id];
+  }
+
+  getClientSession() {
+    return {
+      startTransaction: () => {},
+      withTransaction: () => {},
+      commitTransaction: () => {},
+      abortTransaction: () => {},
+      endSession: () => {},
+    };
   }
 }

@@ -12,8 +12,6 @@ import { UserEntity } from './entities/user.entity';
       type: 'mongodb',
       host: 'localhost',
       port: 27017,
-      username: 'fintech_user',
-      password: 'fintech',
       database: 'fintech',
       synchronize: false,
       entities: [UserEntity],

@@ -1,15 +1,17 @@
-version: '3.7'
-
+version: '3.8'
 services:
   mongo:
-    container_name: mongodb
+    container_name: mongo1
     image: mongo:latest
     restart: always
     ports:
       - 27017:27017
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: ${MONGODB_USER}
-      MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_PASSWORD}
-      MONGO_INITDB_DATABASE: fintech
+    networks:
+      - mongoCluster
+    command: mongod --replSet myReplicaSet --bind_ip localhost,mongo1
     volumes:
       - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+networks:
+  mongoCluster:
+    external: true
+    name: mongoCluster

@@ -1,9 +1,16 @@
 import { UserEntity } from './entities/user.entity';
-import { Repository } from 'typeorm';
+import { ClientSession, MongoEntityManager, Repository } from 'typeorm';
 import { ObjectId } from 'mongodb';
 
 export class AppRepository implements BaseRepository {
-  constructor(private usersRepository: Repository<UserEntity>) {}
+  constructor(
+    private usersRepository: Repository<UserEntity>,
+    private readonly entityManager: MongoEntityManager,
+  ) {}
+
+  getClientSession() {
+    return this.entityManager.mongoQueryRunner.databaseConnection.startSession();
+  }
 
   findAllUsers(): Promise<UserEntity[]> {
     return this.usersRepository.find();
@@ -17,10 +24,20 @@ export class AppRepository implements BaseRepository {
     return this.usersRepository.save(data);
   }
 
-  async saveUserBalance(user: User, balance: number) {
+  async saveUserBalance(
+    session: ClientSession,
+    user: User,
+    balance: number,
+  ): Promise<UserEntity | null> {
+    const oldBalance = user.balance;
     user.balance = balance;
-    await this.usersRepository.update({ _id: user._id }, user);
 
-    return true;
+    return (await this.usersRepository.manager
+      .getMongoRepository(UserEntity)
+      .findOneAndUpdate(
+        { _id: user._id, balance: oldBalance },
+        { $set: user },
+        { session: session },
+      )) as UserEntity;
   }
 }

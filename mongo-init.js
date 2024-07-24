@@ -1,11 +1,30 @@
 print(' ');
-print(' mongo-init ####################################### ');
+print(' mongo-init ');
+print(' ');
 
-const database = 'fintech';
-db = db.getSiblingDB(database);
-db.createUser({
-  user: 'fintech_user',
-  pwd: 'fintech',
-  roles: [{ role: 'readWrite', db: database }],
+rs.initiate({
+  _id: 'myReplicaSet',
+  members: [{ _id: 0, host: 'localhost' }],
 });
-db.createCollection('users');
+
+let createdCollection = false;
+
+while (!createdCollection) {
+  try {
+    replicaStatus = rs.status();
+
+    print(' ');
+    print(' mongo-init: Creating collection');
+
+    db = db.getSiblingDB('fintech');
+    db.createCollection('users');
+    createdCollection = true;
+
+    print(' ');
+    print(' mongo-init: Created collection');
+  } catch (e) {
+    print(' ');
+    print(' mongo-init Error');
+    print(e.message);
+  }
+}

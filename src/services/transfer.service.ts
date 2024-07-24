@@ -31,8 +31,42 @@ export class TransferService {
 
     const payeeBalanceAfterTransfer = payee.balance + data.value;
 
-    await repository.saveUserBalance(payer, payerBalanceAfterTransfer);
-    await repository.saveUserBalance(payee, payeeBalanceAfterTransfer);
+    const session = repository.getClientSession();
+    session.startTransaction();
+    try {
+      const payerResult = await repository.saveUserBalance(
+        session,
+        payer,
+        payerBalanceAfterTransfer,
+      );
+
+      if (!payerResult) {
+        throw new HttpException(
+          'An error occured. Please, try again.',
+          HttpStatus.INTERNAL_SERVER_ERROR,
+        );
+      }
+
+      const payeeResult = await repository.saveUserBalance(
+        session,
+        payee,
+        payeeBalanceAfterTransfer,
+      );
+
+      if (!payeeResult) {
+        throw new HttpException(
+          'An error occured. Please, try again.',
+          HttpStatus.INTERNAL_SERVER_ERROR,
+        );
+      }
+      await session.commitTransaction();
+      session.endSession();
+    } catch (e) {
+      await session.abortTransaction();
+      await session.endSession();
+
+      throw e;
+    }
 
     return '';
   }

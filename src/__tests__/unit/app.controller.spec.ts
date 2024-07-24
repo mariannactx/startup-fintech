@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { getRepositoryToken } from '@nestjs/typeorm';
+import { getEntityManagerToken, getRepositoryToken } from '@nestjs/typeorm';
 
 import { AppController } from '../../app.controller';
 import { AppService } from '../../app.service';
@@ -21,6 +21,10 @@ describe('AppController', () => {
         AppService,
         {
           provide: getRepositoryToken(UserEntity),
+          useValue: {},
+        },
+        {
+          provide: getEntityManagerToken(),
           useValue: {},
         },
       ],
