@@ -61,11 +61,11 @@ export class TransferService {
       }
       await session.commitTransaction();
       session.endSession();
-    } catch (e) {
+    } catch (err) {
       await session.abortTransaction();
       await session.endSession();
 
-      throw e;
+      throw err;
     }
 
     return '';

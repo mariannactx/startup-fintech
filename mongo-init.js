@@ -22,9 +22,13 @@ while (!createdCollection) {
 
     print(' ');
     print(' mongo-init: Created collection');
-  } catch (e) {
+
+    db.users.createIndex({ email: 1 }, { unique: true });
+    db.users.createIndex({ cpf: 1 }, { unique: true });
+
+  } catch (err) {
     print(' ');
     print(' mongo-init Error');
-    print(e.message);
+    print(err.message);
   }
 }

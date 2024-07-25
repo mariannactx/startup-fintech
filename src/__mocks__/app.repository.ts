@@ -38,6 +38,14 @@ export class MockRepository implements BaseRepository {
   }
 
   async createUser(data: UserDTO) {
+    const duplicate = users.find(
+      ({ email, cpf }) => email === data.email || cpf === data.cpf,
+    );
+
+    if (duplicate) {
+      throw new Error('Email and/or cpf already exists');
+    }
+
     const user = { _id: users.length + 1, ...data };
     users.push(user);
     return user;

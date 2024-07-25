@@ -34,22 +34,27 @@ describe('AppController', () => {
   });
 
   describe('create user', () => {
+    const data: UserDTO = {
+      type: 'common',
+      fullName: 'Pedro Silva',
+      cpf: '1234567893',
+      email: 'pedro@silva.com',
+      password: '123456',
+      balance: 120,
+    };
     it('should return created user', async () => {
-      const data: UserDTO = {
-        type: 'common',
-        fullName: 'Pedro Silva',
-        cpf: '1234567893',
-        email: 'pedro@silva.com',
-        password: '123456',
-        balance: 120,
-      };
-
       expect(await appController.createUser(data)).toBe(
         JSON.stringify({
           _id: 4,
           ...data,
         }),
       );
+    });
+
+    it('should return error for duplicated email/cpf', async () => {
+      expect(async () => {
+        await appController.createUser(data);
+      }).rejects.toEqual(new Error('Email and/or cpf already exists'));
     });
   });
 
