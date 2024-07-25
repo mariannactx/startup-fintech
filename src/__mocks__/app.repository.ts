@@ -52,7 +52,6 @@ export class MockRepository implements BaseRepository {
   getClientSession() {
     return {
       startTransaction: () => {},
-      withTransaction: () => {},
       commitTransaction: () => {},
       abortTransaction: () => {},
       endSession: () => {},
