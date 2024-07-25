@@ -6,12 +6,24 @@ services:
     restart: always
     ports:
       - 27017:27017
-    networks:
-      - mongoCluster
-    command: mongod --replSet myReplicaSet --bind_ip localhost,mongo1
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/fintech
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
     volumes:
       - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
-networks:
-  mongoCluster:
-    external: true
-    name: mongoCluster
+    command: mongod --replSet myReplicaSet --bind_ip 127.0.0.1,mongo1
+  api:
+    image: node:18-alpine
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - '3000:3000'
+    depends_on:
+      mongo:
+        condition: service_healthy
+    links:
+      - mongo

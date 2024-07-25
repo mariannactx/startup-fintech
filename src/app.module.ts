@@ -10,8 +10,9 @@ import { UserEntity } from './entities/user.entity';
   imports: [
     TypeOrmModule.forRoot({
       type: 'mongodb',
-      host: 'localhost',
+      host: 'mongo',
       port: 27017,
+      directConnection: true,
       database: 'fintech',
       synchronize: false,
       entities: [UserEntity],

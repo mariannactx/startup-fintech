@@ -4,7 +4,7 @@ print(' ');
 
 rs.initiate({
   _id: 'myReplicaSet',
-  members: [{ _id: 0, host: 'localhost' }],
+  members: [{ _id: 0, host: '127.0.0.1' }],
 });
 
 let createdCollection = false;
