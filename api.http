@@ -45,7 +45,7 @@ GET http://localhost:3000/users
 ###
 
 ### Get user 1 balance
-GET http://localhost:3000/users/balance/<user1>
+GET http://localhost:3000/users/balance/66a31256fd302846b0e7352f
 ###
 
 ### Transfer from user 1 to user 2 (success)
@@ -54,8 +54,8 @@ Content-Type: application/json
 
 {
   "value": 50.5,
-  "payer": "<user1>",
-  "payee": "<user2>"
+  "payer": "66a31256fd302846b0e7352f",
+  "payee": "66a3125efd302846b0e73530"
 }
 ###
 
@@ -65,8 +65,8 @@ Content-Type: application/json
 
 {
   "value": 100.5,
-  "payer": "<user3>",
-  "payee": "<user1>"
+  "payer": "66a31261fd302846b0e73531",
+  "payee": "66a31256fd302846b0e7352f"
 }
 ###
 
@@ -76,8 +76,8 @@ Content-Type: application/json
 
 {
   "value": 4050.6,
-  "payer": "<user1>",
-  "payee": "<user3>"
+  "payer": "66a31256fd302846b0e7352f",
+  "payee": "66a31261fd302846b0e73531"
 }
 
 ### Get all users

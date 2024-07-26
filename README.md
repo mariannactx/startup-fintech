@@ -75,4 +75,4 @@ Executar, dentro das pastas /api e /redis-consumer, o comando `yarn test`
 
 ### Chamadas ao serviço HTTP
 
-Há um arquivo chamado `api.http` que funciona junto com o plugin do Visual Studio Code `REST Client`. Este arquivo contém uma sequência de chamadas HTTP que testa as funcionalidades da aplicação. É preciso substituir
+Há um arquivo chamado `api.http` que funciona junto com o plugin do Visual Studio Code `REST Client`. Este arquivo contém uma sequência de chamadas HTTP que testa as funcionalidades da aplicação. É preciso substituir <userId> pelo valor correspondente após a criação dos usuários.
