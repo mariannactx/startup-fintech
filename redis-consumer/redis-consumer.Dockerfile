@@ -1,4 +1,4 @@
-FROM node:18-alpine AS teste-leansaude-api
+FROM node:18-alpine as teste-leansaude-redis-consumer
 
 WORKDIR /home/node/app
  
@@ -7,9 +7,7 @@ COPY . .
 # RUN yarn install --production
 # RUN npm install -g @nestjs/cli
 # RUN yarn build
- 
-RUN yarn
 
-EXPOSE 3000
+RUN yarn
 
 CMD ["yarn", "start:dev"]

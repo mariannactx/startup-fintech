@@ -3,6 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { AppController } from './app.controller';
+import { HealthcheckController } from './healthcheck.controller';
 import { AppService } from './app.service';
 import { UserEntity } from './entities/user.entity';
 import { BullModule } from '@nestjs/bull';
@@ -31,7 +32,7 @@ import { REDIS_QUEUE_NAME } from './utils/constants';
       name: REDIS_QUEUE_NAME,
     }),
   ],
-  controllers: [AppController],
+  controllers: [AppController, HealthcheckController],
   providers: [AppService],
 })
 export class AppModule {
