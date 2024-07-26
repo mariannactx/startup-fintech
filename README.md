@@ -22,7 +22,7 @@ sequenceDiagram
   Redis->>+Consumer: executar tarefa
   Consumer->>+Mongo: encontrar usuários, validar e transferir
   Mongo->>-Consumer: resultado da transferência
-  Consumer-->>-Redis: informações de sucesso/falha da tarefa
+  Consumer->>-Redis: informações de sucesso/falha da tarefa
 ```
 
 ### Operações de leitura/escrita de usuários
@@ -75,4 +75,4 @@ Executar, dentro das pastas /api e /redis-consumer, o comando `yarn test`. Pode 
 
 ### Chamadas ao serviço HTTP
 
-Há um arquivo chamado `api.http` que funciona junto com o plugin do Visual Studio Code `REST Client`. Este arquivo contém uma sequência de chamadas HTTP que testa as funcionalidades da aplicação. É preciso substituir <userId> pelo valor correspondente após a criação dos usuários. Precisa ser executado após a inicialização do sistema.
+Há um arquivo chamado `api.http` que funciona junto com o plugin do Visual Studio Code `REST Client`. Este arquivo contém uma sequência de chamadas HTTP que testa as funcionalidades da aplicação. É preciso substituir `<userId>` pelo valor correspondente após a criação dos usuários. Precisa ser executado após a inicialização do sistema.
