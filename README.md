@@ -4,7 +4,7 @@
 - [Inicializar aplicação](#Inicializar-aplicação)
 - [Testar aplicação](#Testar-aplicação)
 
-## Diagrama da aplicação
+## Diagrama do sistema
 
 ### Transferir
 
@@ -46,7 +46,7 @@ sequenceDiagram
   API->>-User: saldo do usuário
 ```
 
-## Inicializar aplicação
+## Inicializar sistema
 
 ### Pré-requisitos
 
@@ -67,12 +67,12 @@ Para inicializar a aplicação, é necessário ter instalado:
 docker container ls --filter "name=teste-leansaude-api" --filter "health=healthy"
 ```
 
-## Testar aplicação
+## Testar aplicações
 
 ### Testes unitários
 
-Executar, dentro das pastas /api e /redis-consumer, o comando `yarn test`
+Executar, dentro das pastas /api e /redis-consumer, o comando `yarn test`. Pode ser executado sem inicializar as aplicações.
 
 ### Chamadas ao serviço HTTP
 
-Há um arquivo chamado `api.http` que funciona junto com o plugin do Visual Studio Code `REST Client`. Este arquivo contém uma sequência de chamadas HTTP que testa as funcionalidades da aplicação. É preciso substituir <userId> pelo valor correspondente após a criação dos usuários.
+Há um arquivo chamado `api.http` que funciona junto com o plugin do Visual Studio Code `REST Client`. Este arquivo contém uma sequência de chamadas HTTP que testa as funcionalidades da aplicação. É preciso substituir <userId> pelo valor correspondente após a criação dos usuários. Precisa ser executado após a inicialização do sistema.
