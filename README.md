@@ -1,28 +1,49 @@
 # Teste LeanSaúde - StartUp Fintech
 
+- [Diagrama da aplicação](#Diagrama-da-aplicação)
+- [Inicializar aplicação](#Inicializar-aplicação)
+- [Testar aplicação](#Testar-aplicação)
+
 ## Diagrama da aplicação
+
+### Transferir
+
+```mermaid
+sequenceDiagram
+  actor User
+  participant API as API (Servidor HTTP)
+  participant Redis
+  participant Mongo as MongoDB (Banco de dados)
+  participant Consumer as Consumidor da fila/Redis
+  User->>+API: PATCH http://localhost:3000/users/transfer
+  API->>+Redis: adicionar tarefa de transferência à fila
+  Redis->>-API: informações da tarefa adicionada
+  API->>-User: informações da tarefa adicionada
+  Redis->>+Consumer: executar tarefa
+  Consumer->>+Mongo: encontrar usuários, validar e transferir
+  Mongo->>-Consumer: resultado da transferência
+  Consumer-->>-Redis: informações de sucesso/falha da tarefa
+```
+
+### Operações de leitura/escrita de usuários
 
 ```mermaid
 sequenceDiagram
   actor User
   participant API as API (HTTP Server)
   participant Mongo as Mongo (Database)
-  participant Redis
-  participant Consumer as Queue Consumer
-  User->>+API: http://localhost:3000/users
-  API->>+Mongo: findAllUsers()
-  Mongo->>-API: users information
-  API->>-User: users information
-  User->>+API: http://localhost:3000/users/transfer
-  API->>+Redis: add transfer to queue
-  Redis->>-API: job added to queue info
-  API->>-User: job added to queue info
-  Redis->>+Consumer: execute job 1
-  Consumer-->>-Redis:
-  Redis->>+Consumer: execute job 2
-  Consumer-->>-Redis:
-  Redis->>+Consumer: execute job 3
-  Consumer-->>-Redis:
+  User->>+API: POST http://localhost:3000/users
+  API->>+Mongo: validar e criar usuário
+  Mongo->>-API: informações do usuário
+  API->>-User: informações do usuário
+  User->>+API: GET http://localhost:3000/users
+  API->>+Mongo: buscar todos os usuários
+  Mongo->>-API: informações dos usuários
+  API->>-User: informações dos usuários
+  User->>+API: GET http://localhost:3000/users/balance/userId
+  API->>+Mongo: buscar usuário
+  Mongo->>-API: saldo do usuário
+  API->>-User: saldo do usuário
 ```
 
 ## Inicializar aplicação
