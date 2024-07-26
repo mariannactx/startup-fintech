@@ -29,25 +29,22 @@ const users: User[] = [
 ];
 
 export class MockRepository implements BaseRepository {
-  async findAllUsers() {
-    return users;
-  }
-
   async findUserById(id) {
     return users[id - 1];
   }
 
-  async createUser(data: UserDTO) {
-    const duplicate = users.find(
-      ({ email, cpf }) => email === data.email || cpf === data.cpf,
-    );
+  async saveUserBalance(session: any, user: User, balance: number) {
+    const id = user._id - 1;
+    users[id].balance = balance;
+    return users[id];
+  }
 
-    if (duplicate) {
-      throw new Error('Email and/or cpf already exists');
-    }
-
-    const user = { _id: users.length + 1, ...data };
-    users.push(user);
-    return user;
+  getClientSession() {
+    return {
+      startTransaction: () => {},
+      commitTransaction: () => {},
+      abortTransaction: () => {},
+      endSession: () => {},
+    };
   }
 }

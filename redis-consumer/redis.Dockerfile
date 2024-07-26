@@ -1,6 +1,6 @@
-FROM node:18-alpine
+FROM node:18
  
-WORKDIR /user/src/app
+WORKDIR /home/src/app
  
 COPY . .
  
@@ -10,4 +10,4 @@ RUN yarn build
  
 EXPOSE 3000
 
-CMD ["yarn", "start:dev"]
+CMD ["yarn", "start:prod"]

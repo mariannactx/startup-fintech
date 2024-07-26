@@ -1,17 +1,10 @@
 {
-  "name": "teste-leansaude",
-  "version": "1.0.0",
-  "description": "Teste LeanSaúde. StartUp Fintech.",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/mariannactx/teste-leansaude.git"
-  },
-  "author": "@mariannactx",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/mariannactx/teste-leansaude/issues"
-  },
-  "homepage": "https://github.com/mariannactx/teste-leansaude#readme",
+  "name": "redis-consumer",
+  "version": "0.0.1",
+  "description": "",
+  "author": "",
+  "private": true,
+  "license": "UNLICENSED",
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
@@ -33,7 +26,7 @@
     "@nestjs/platform-express": "^10.0.0",
     "@nestjs/typeorm": "^10.0.2",
     "bull": "^4.15.1",
-    "mongodb": "^5.8.0",
+    "mongodb": "^6.8.0",
     "reflect-metadata": "^0.2.0",
     "rxjs": "^7.8.1",
     "typeorm": "^0.3.20",

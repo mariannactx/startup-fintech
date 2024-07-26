@@ -1,0 +1,2 @@
+export const REDIS_JOB_NAME = 'TRANSFER_SERVICE';
+export const REDIS_QUEUE_NAME = 'TRANSFERS';

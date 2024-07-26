@@ -16,7 +16,7 @@ export class AppController {
   }
 
   @Patch('transfer')
-  async transfer(@Body() body: Transfer): Promise<string> {
+  async transfer(@Body() body: Transfer): Promise<any> {
     return await this.appService.transfer(body);
   }
 

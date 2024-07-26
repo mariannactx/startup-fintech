@@ -1,12 +1,14 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { AppRepository } from './app.repository';
-import { InjectEntityManager, InjectRepository } from '@nestjs/typeorm';
-import { MongoEntityManager, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from './entities/user.entity';
 import { GetAllUsersService } from './services/getAllUsers';
 import { CreateUserService } from './services/createUser.service';
-import { TransferService } from './services/transfer.service';
 import { GetBalanceService } from './services/getBalance.service';
+import { InjectQueue } from '@nestjs/bull';
+import { Queue } from 'bull';
+import { REDIS_JOB_NAME, REDIS_QUEUE_NAME } from './utils/constants';
 
 @Injectable()
 export class AppService {
@@ -15,13 +17,9 @@ export class AppService {
     @InjectRepository(UserEntity)
     private usersRepository: Repository<UserEntity>,
 
-    @InjectEntityManager()
-    private readonly entityManager: MongoEntityManager,
+    @InjectQueue(REDIS_QUEUE_NAME) private redisQueue: Queue,
   ) {
-    this.repository = new AppRepository(
-      this.usersRepository,
-      this.entityManager,
-    );
+    this.repository = new AppRepository(this.usersRepository);
   }
 
   async getAllUsers(): Promise<string> {
@@ -32,8 +30,8 @@ export class AppService {
     return await new CreateUserService().execute(data, this.repository);
   }
 
-  async transfer(data: Transfer): Promise<string> {
-    return await new TransferService().execute(data, this.repository);
+  async transfer(data: Transfer): Promise<any> {
+    return await this.redisQueue.add(REDIS_JOB_NAME, data);
   }
 
   async getBalance(id: number): Promise<string> {
