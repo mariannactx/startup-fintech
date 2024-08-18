@@ -1,4 +1,4 @@
-# Teste LeanSaúde - StartUp Fintech
+# StartUp Fintech
 
 - [Diagrama da aplicação](#Diagrama-da-aplicação)
 - [Inicializar aplicação](#Inicializar-aplicação)
